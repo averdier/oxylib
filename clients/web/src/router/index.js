@@ -22,7 +22,8 @@ const connectedGuard = (to, from, next) => {
 
 const routes = [
   {
-    path: '/',
+    path: '/index.html',
+    alias: '/',
     name: 'Shell',
     component: Shell,
     beforeEnter: connectedGuard,

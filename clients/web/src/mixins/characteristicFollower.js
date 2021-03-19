@@ -2,13 +2,14 @@ export default {
   methods: {
     followEvents () {
       if (this.characteristic) {
-        this.characteristic.addEventListener('characteristicvaluechanged', this.onEvent)
+        console.log('subscribe')
+        this.characteristic.tx.addEventListener('characteristicvaluechanged', this.onEvent)
       }
     },
 
     unFollowEvents () {
       if (this.characteristic) {
-        this.characteristic.removeEventListener('characteristicvaluechanged', this.onEvent)
+        this.characteristic.tx.removeEventListener('characteristicvaluechanged', this.onEvent)
       }
     }
   },

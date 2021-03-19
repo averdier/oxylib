@@ -65,13 +65,9 @@ class OxygenCallback: public BLECharacteristicCallbacks {
 void updateBLECharacteristics () {
   if (millis() - lastUpdateTime > BLE_UPDATE_RATE) {
     bleOxygenTx->setValue((uint8_t*)&oxygenPercent, 4);
+    bleOxygenTx->notify();
     lastUpdateTime = millis();
   }
-}
-
-// Initialize ble
-void initBle () {
-  
 }
 
 /*****************************************************************************/
@@ -85,27 +81,30 @@ void setup() {
   bleServer->setCallbacks(new ServerCallback);
   BLEService *oxylibService = bleServer->createService(SERVICE_UUID);
 
-  bleOxygenTx = oxylibService->createCharacteristic(
-    OXYGEN_TX,
-    BLECharacteristic::PROPERTY_READ   |
-    BLECharacteristic::PROPERTY_NOTIFY |
-    BLECharacteristic::PROPERTY_INDICATE
-  );
-  bleOxygenTx->addDescriptor(new BLE2902());
-  bleOxygenTx->setValue((uint8_t*)&oxygenPercent, 4);
-
   bleOxygenRx = oxylibService->createCharacteristic(
     OXYGEN_RX,
-    BLECharacteristic::PROPERTY_READ   |
+    BLECharacteristic::PROPERTY_READ |
     BLECharacteristic::PROPERTY_WRITE
   );
   bleOxygenRx->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED | ESP_GATT_PERM_WRITE_ENCRYPTED);
   bleOxygenRx->setValue((uint8_t*)&oxygenPercent, 4);
   bleOxygenRx->setCallbacks(new OxygenCallback());
 
+  bleOxygenTx = oxylibService->createCharacteristic(
+    OXYGEN_TX,
+    BLECharacteristic::PROPERTY_READ    |
+    BLECharacteristic::PROPERTY_NOTIFY  |
+    BLECharacteristic::PROPERTY_INDICATE
+  );
+  bleOxygenTx->addDescriptor(new BLE2902());
+  bleOxygenTx->setValue((uint8_t*)&oxygenPercent, 4);
+
   oxylibService->start();
-  BLEAdvertising *bleAdvertising = bleServer->getAdvertising();
-  bleAdvertising->start();
+  BLEAdvertising *bleAdvertising = BLEDevice::getAdvertising();
+  bleAdvertising->addServiceUUID(SERVICE_UUID);
+  bleAdvertising->setScanResponse(false);
+  bleAdvertising->setMinPreferred(0x0);
+  BLEDevice::startAdvertising();
 
   BLESecurity *bleSecurity = new BLESecurity();
   bleSecurity->setStaticPIN(123456);

@@ -119,9 +119,7 @@ export const actions = {
       
       // Start notifications
       for (let i = 0; i < characs.length; i++) {
-        console.log('getting notifications')
         await state.characteristics[characs[i]].tx.startNotifications()
-        console.log('done')
       }
 
       commit('SET_TANK', OxylibConfig.tanks[tankType])

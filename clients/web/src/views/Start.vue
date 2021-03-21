@@ -31,6 +31,10 @@
 
         <!--Form-->
         <template v-else>
+          <div class="pb-10">
+            <v-img :src="require('@/assets/logo.png')" contain height="128"></v-img>
+          </div>
+
           <!--Login card-->
           <v-card class="loginCard">
             <v-card-title>Connect</v-card-title>

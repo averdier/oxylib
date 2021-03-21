@@ -61,8 +61,11 @@ export default {
   },
   methods: {
     onEvent (event) {
-      console.log(event)
       this.oxygen = event.target.value.getUint8(0)
+    },
+
+    onData (data) {
+      this.oxygen = data.getUint8(0)
     },
 
     setOxygen (value) {

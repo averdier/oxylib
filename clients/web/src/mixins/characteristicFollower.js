@@ -2,8 +2,11 @@ export default {
   methods: {
     followEvents () {
       if (this.characteristic) {
-        console.log('subscribe')
         this.characteristic.tx.addEventListener('characteristicvaluechanged', this.onEvent)
+        this.characteristic.tx.readValue()
+          .then(data => {
+            if (this.onData) this.onData(data)
+          })
       }
     },
 

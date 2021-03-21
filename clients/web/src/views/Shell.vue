@@ -75,6 +75,7 @@ export default {
     drawer: null,
     links: [
       { label: 'Home', icon: 'mdi-view-dashboard', to: { name: 'Home' } },
+      { label: 'Settings', icon: 'mdi-cog', to: { name: 'Settings' }},
       { label: 'About', icon: 'mdi-information-outline', to: { name: 'NestedAbout' } }
     ]
   }),

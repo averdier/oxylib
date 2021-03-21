@@ -17,6 +17,7 @@
 #define SERVICE_UUID          "1bfc18c5-a691-47c1-aa0b-f10992bf5a1a"
 #define OXYGEN_TX             "deb5a19f-759a-4ec3-9a7f-a554bf6722c6"
 #define OXYGEN_RX             "bafbee31-4442-4e1a-be74-1ae65a8caf88"
+#define WIFI_ENABLED          "6a8e7657-1b99-447a-aee0-38128a948c48"
 
 /*****************************************************************************/
 /*GLOBAL Data                                                                */
@@ -26,6 +27,7 @@
 BLEServer* bleServer = NULL;
 BLECharacteristic* bleOxygenTx = NULL;
 BLECharacteristic* bleOxygenRx = NULL;
+BLECharacteristic* bleWifiEnabled = NULL;
 bool bleConnected = false;
 bool bleOldConnected = false;
 
@@ -38,6 +40,7 @@ unsigned long lastUpdateTime;
 // Hardware state
 bool motorOn = false;
 bool motorInverse = false; // horaire = false, antihoraire = true
+bool wifiEnabled = false;
 
 // State machine
 StateMachine machine = StateMachine();
@@ -204,6 +207,13 @@ void setup() {
   bleServer = BLEDevice::createServer();
   bleServer->setCallbacks(new ServerCallback);
   BLEService *oxylibService = bleServer->createService(SERVICE_UUID);
+
+  bleWifiEnabled = oxylibService->createCharacteristic(
+    WIFI_ENABLED,
+    BLECharacteristic::PROPERTY_READ |
+    BLECharacteristic::PROPERTY_WRITE
+  );
+  bleWifiEnabled->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED | ESP_GATT_PERM_WRITE_ENCRYPTED);
 
   bleOxygenRx = oxylibService->createCharacteristic(
     OXYGEN_RX,

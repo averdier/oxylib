@@ -1,16 +1,22 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12">
-        <TankCard v-if="tank" :item="tank" />
-      </v-col>
-      <v-col cols="12">
-        <BLEOxygenCard />
-      </v-col>
-      <v-col cols="12" sm="6" md="4"
-        v-for="(component, i) in characteristicCards"
-        :key="i">
-        <component :is="component" />
+      <v-col cols="12" lg="8" offset-lg="2" xl="4" offset-xl="4">
+
+        <v-row>
+          <v-col cols="12">
+            <TankCard v-if="tank" :item="tank" />
+          </v-col>
+          <v-col cols="12">
+            <BLEOxygenCard />
+          </v-col>
+          <v-col cols="12" sm="6" md="4"
+            v-for="(component, i) in characteristicCards"
+            :key="i">
+            <component :is="component" />
+          </v-col>
+        </v-row>
+
       </v-col>
     </v-row>
   </v-container>

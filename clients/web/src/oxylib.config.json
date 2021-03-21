@@ -31,11 +31,11 @@
   "tanks": {
     "01": {
       "name": "Tank 01",
-      "picture": "https://via.placeholder.com/1600x400"
+      "picture": "/img/tanks/01.png"
     },
     "02": {
       "name": "Tank 02",
-      "picture": "https://via.placeholder.com/1600x400"
+      "picture": "/img/tanks/02.png"
     }
   }
 }

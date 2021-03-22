@@ -4,16 +4,21 @@
       "service": "1bfc18c5-a691-47c1-aa0b-f10992bf5a1a",
       "characteristics": {
         "oxygen": {
+          "notify": true,
           "tx": "deb5a19f-759a-4ec3-9a7f-a554bf6722c6",
           "rx": "92b71a2a-48d6-470f-ba26-58805ba9f909"
         },
         "pressure": {
+          "notify": true,
           "tx": "3dd37aa3-a1b8-45e9-b555-349f8f421c42"
         },
         "temperature": {
+
+          "notify": true,
           "tx": "ea668c2a-fd7e-45d0-85fa-a5c8907754b8"
         },
         "humidity": {
+          "notify": true,
           "tx": "cb599054-bcb0-4fdd-9a1b-034c3c8d7816"
         }
       }
@@ -22,8 +27,14 @@
       "service": "1bfc18c5-a691-47c1-aa0b-f10992bf5a1a",
       "characteristics": {
         "oxygen": {
+          "notify": true,
           "tx": "deb5a19f-759a-4ec3-9a7f-a554bf6722c6",
           "rx": "bafbee31-4442-4e1a-be74-1ae65a8caf88"
+        },
+        "wifiEnabled": {
+          "notify": false,
+          "tx": "6a8e7657-1b99-447a-aee0-38128a948c48",
+          "rx": "6a8e7657-1b99-447a-aee0-38128a948c48"
         }
       }
     }

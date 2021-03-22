@@ -54,11 +54,13 @@ State* StateRotate   = machine.addState(&rotateState);
 void turnOnMotor () {
   // TODO code here
   motorOn = true;
+  Serial.println("Turn on motor");
 }
 
 void turnOffMotor () {
   // TODO code here
   motorOn = false;
+  Serial.println("Turn off motor");
 }
 
 void readOxygenLevel () {
@@ -89,10 +91,12 @@ bool isManualOverride () {
 class ServerCallback: public BLEServerCallbacks {
   void onConnect(BLEServer* pServer) {
     bleConnected = true;
+    Serial.println("BLE connected");
   }
 
   void onDisconnect(BLEServer* pServer) {
     bleConnected = false;
+    Serial.println("BLE disconnected");
   }
 };
 
@@ -121,6 +125,18 @@ class OxygenCallback: public BLECharacteristicCallbacks {
 
         // TODO find and set motor pwm
       }
+    }
+  }
+};
+
+// Wifi state callback
+class WifiEnabledCallback: public BLECharacteristicCallbacks {
+  void onWrite(BLECharacteristic *pCharacteristic) {
+    std::string value = pCharacteristic->getValue();
+    if (value.length() > 0) {
+      wifiEnabled = value[0] ? true : false;
+      Serial.print("New wifi state set: ");
+      Serial.println(wifiEnabled);
     }
   }
 };
@@ -154,6 +170,7 @@ void rotateState () {
   }
 
   if (isManualOverride()) {
+    Serial.println("Manual override detected");
     turnOffMotor();
   }
 }
@@ -171,7 +188,8 @@ bool idleToItself () {
 }
 
 bool idleToRotate () {
-  if (oxygenValue != oxygenOldValue) { 
+  if (oxygenValue != oxygenOldValue) {
+    Serial.println("Go to rotate state");
     return true;
   }
   return false;
@@ -189,6 +207,7 @@ bool rotateToIdle () {
     if (motorOn) {
       turnOffMotor();
     }
+    Serial.println("Go to idle state");
     return true;
   }
   return false;
@@ -201,6 +220,7 @@ bool rotateToIdle () {
 /*****************************************************************************/
 void setup() {
   Serial.begin(115200);
+  Serial.println("Start setup");
 
   // BLE Setup
   BLEDevice::init("oxylib-02012345");
@@ -214,6 +234,10 @@ void setup() {
     BLECharacteristic::PROPERTY_WRITE
   );
   bleWifiEnabled->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED | ESP_GATT_PERM_WRITE_ENCRYPTED);
+  bleWifiEnabled->setCallbacks(new WifiEnabledCallback());
+  uint32_t devWifiEnabled = wifiEnabled ? 1 : 0; // TODO: Do cleaner
+  bleWifiEnabled->setValue((uint8_t*)&devWifiEnabled, 4);
+
 
   bleOxygenRx = oxylibService->createCharacteristic(
     OXYGEN_RX,
@@ -250,6 +274,8 @@ void setup() {
 
   StateRotate->addTransition(&rotateToItself, StateRotate);
   StateRotate->addTransition(&rotateToIdle, StateIdle);
+
+  Serial.println("Setup complete");
 }
 
 /*****************************************************************************/

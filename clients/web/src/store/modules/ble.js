@@ -102,14 +102,20 @@ export const actions = {
       // Add to store first
       for (let i = 0; i < characs.length; i++) {
         const characteristic = {
+          notify: OxylibConfig.devices[deviceType].characteristics[characs[i]].notify,
           tx: await service.getCharacteristic(
             OxylibConfig.devices[deviceType].characteristics[characs[i]].tx
           )
         }
         if (OxylibConfig.devices[deviceType].characteristics[characs[i]].rx) {
-          characteristic.rx = await service.getCharacteristic(
-            OxylibConfig.devices[deviceType].characteristics[characs[i]].rx
-          )
+          if (OxylibConfig.devices[deviceType].characteristics[characs[i]].rx !== OxylibConfig.devices[deviceType].characteristics[characs[i]].tx) {
+            characteristic.rx = await service.getCharacteristic(
+              OxylibConfig.devices[deviceType].characteristics[characs[i]].rx
+            )
+          }
+          else {
+            characteristic.rx = characteristic.tx
+          }
         }
         commit('SET_CHARACTERISTIC', {
           key: characs[i],
@@ -119,7 +125,9 @@ export const actions = {
       
       // Start notifications
       for (let i = 0; i < characs.length; i++) {
-        await state.characteristics[characs[i]].tx.startNotifications()
+        if (state.characteristics[characs[i]].notify) {
+          await state.characteristics[characs[i]].tx.startNotifications()
+        }
       }
 
       commit('SET_TANK', OxylibConfig.tanks[tankType])

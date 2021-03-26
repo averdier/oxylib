@@ -27,6 +27,10 @@ Preuve de concept de l'application Flutter
 
 [![PocFullter](https://i.ytimg.com/vi/xiqBmj2giFY/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCJvpyR4Y6OM_d13URJjaFa42h2og)](https://youtu.be/xiqBmj2giFY)
 
+Preuve de concept de l'application Android Wear
+
+[![AndroidWear](https://i.ytimg.com/vi/6JOxEehorW0/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC67t40TBuPKElSg6bRJGYrIewdAA)](https://youtu.be/6JOxEehorW0)
+
 ## Périphériques
 
 - [Arduino33BLE]()

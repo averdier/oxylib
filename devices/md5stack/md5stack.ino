@@ -199,6 +199,38 @@ void oxygenScreen () {
   }
 }
 
+void batteryScreen () {
+  while ((!M5.BtnA.isPressed()) && (!M5.BtnB.isPressed())) {
+    Disbuff.fillRect(0, 0, 320, 240, BLACK);
+
+    Disbuff.setTextSize(3);
+    Disbuff.setTextColor(WHITE);
+
+    Disbuff.setCursor(12, 12);
+    Disbuff.printf("Battery level:\n");
+
+    Disbuff.setCursor(12, 52);
+    if (!M5.Power.canControl()) {
+      Disbuff.setTextColor(RED);
+      Disbuff.printf("No communication with IP5306 chip:\n");
+    }
+    else {
+      Disbuff.setTextSize(2);
+      Disbuff.printf("Can communicate with IP5306 chip:\n");
+    }
+    displayBuffer();
+
+    M5.update();
+    updateDevice();
+    delay(100);
+  }
+  while ((M5.BtnA.isPressed()) || (M5.BtnB.isPressed())) {
+    M5.update();
+    updateDevice();
+    delay(10);
+  }
+}
+
 /*****************************************************************************/
 /*EVENTS                                                                     */
 /*****************************************************************************/
@@ -341,6 +373,7 @@ bool setupBle () {
 
 void setup () {
   M5.begin();
+  Wire.begin();
   Serial.println("Start setup");
   M5.update();
   Serial.println("M5 initialized");
@@ -360,4 +393,5 @@ void setup () {
 void loop () {
   bleScreen();
   oxygenScreen();
+  batteryScreen();
 }

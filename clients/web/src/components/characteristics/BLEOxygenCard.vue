@@ -64,9 +64,13 @@ export default {
       this.oxygen = event.target.value.getUint8(0)
     },
 
+    onData (data) {
+      this.oxygen = data.getUint8(0)
+    },
+
     setOxygen (value) {
-      if (this.characteristic) {
-        this.characteristic.writeValue(new Uint8Array([value]))
+      if (this.characteristic.rx) {
+        this.characteristic.rx.writeValue(new Uint8Array([value]))
       }
     },
 

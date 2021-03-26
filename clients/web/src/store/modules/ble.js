@@ -101,18 +101,33 @@ export const actions = {
 
       // Add to store first
       for (let i = 0; i < characs.length; i++) {
+        const characteristic = {
+          notify: OxylibConfig.devices[deviceType].characteristics[characs[i]].notify,
+          tx: await service.getCharacteristic(
+            OxylibConfig.devices[deviceType].characteristics[characs[i]].tx
+          )
+        }
+        if (OxylibConfig.devices[deviceType].characteristics[characs[i]].rx) {
+          if (OxylibConfig.devices[deviceType].characteristics[characs[i]].rx !== OxylibConfig.devices[deviceType].characteristics[characs[i]].tx) {
+            characteristic.rx = await service.getCharacteristic(
+              OxylibConfig.devices[deviceType].characteristics[characs[i]].rx
+            )
+          }
+          else {
+            characteristic.rx = characteristic.tx
+          }
+        }
         commit('SET_CHARACTERISTIC', {
           key: characs[i],
-          characteristic: await service.getCharacteristic(
-            OxylibConfig.devices[deviceType].characteristics[characs[i]]
-          )
+          characteristic
         })
-        await state.characteristics[characs[i]].startNotifications()
       }
       
       // Start notifications
       for (let i = 0; i < characs.length; i++) {
-        await state.characteristics[characs[i]].startNotifications()
+        if (state.characteristics[characs[i]].notify) {
+          await state.characteristics[characs[i]].tx.startNotifications()
+        }
       }
 
       commit('SET_TANK', OxylibConfig.tanks[tankType])
@@ -131,7 +146,7 @@ export const actions = {
   }) {
     // Clean characteristics
     if (state.characteristics.temperature) {
-      await state.characteristics.temperature.stopNotifications()
+      await state.characteristics.temperature.tx.stopNotifications()
       commit('SET_CHARACTERISTIC', {
         key: 'temperature',
         characteristic: null
@@ -139,7 +154,7 @@ export const actions = {
     }
 
     if (state.characteristics.humidity) {
-      await state.characteristics.humidity.stopNotifications()
+      await state.characteristics.humidity.tx.stopNotifications()
       commit('SET_CHARACTERISTIC', {
         key: 'humidity',
         characteristic: null
@@ -147,7 +162,7 @@ export const actions = {
     }
 
     if (state.characteristics.pressure) {
-      await state.characteristics.pressure.stopNotifications()
+      await state.characteristics.pressure.tx.stopNotifications()
       commit('SET_CHARACTERISTIC', {
         key: 'pressure',
         characteristic: null
@@ -155,7 +170,7 @@ export const actions = {
     }
 
     if (state.characteristics.oxygen) {
-      await state.characteristics.oxygen.stopNotifications()
+      await state.characteristics.oxygen.tx.stopNotifications()
       commit('SET_CHARACTERISTIC', {
         key: 'oxygen',
         characteristic: null

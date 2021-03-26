@@ -1,7 +1,7 @@
 <template>
   <v-container class="fill-height grey lighten-3" fluid>
     <v-row justify="center" align="center">
-      <v-col cols="12" md="6" lg="4" class="text-center">
+      <v-col cols="12" md="6" lg="4" xl="3" class="text-center">
 
         <!--Loading-->
         <template v-if="status === 'loading'">
@@ -31,6 +31,10 @@
 
         <!--Form-->
         <template v-else>
+          <div class="pb-10">
+            <v-img :src="require('@/assets/logo.png')" contain height="128"></v-img>
+          </div>
+
           <!--Login card-->
           <v-card class="loginCard">
             <v-card-title>Connect</v-card-title>

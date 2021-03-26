@@ -7,6 +7,7 @@ import Start from '../views/Start.vue'
 import Requirements from '../views/Requirements.vue'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
+import Settings from '../views/Settings.vue'
 
 Vue.use(VueRouter)
 
@@ -37,6 +38,11 @@ const routes = [
         path: 'about',
         name: 'NestedAbout',
         component: About
+      },
+      {
+        path: 'settings',
+        name: 'Settings',
+        component: Settings
       }
     ]
   },

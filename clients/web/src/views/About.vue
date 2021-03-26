@@ -64,14 +64,8 @@ export default {
       {
         name: 'Patrick',
         role: 'Product Owner',
-        description: 'Your product owner',
+        description: 'Product owner',
         picture: 'https://avatars.dicebear.com/4.5/api/male/patrick.svg'
-      },
-      {
-        name: 'Sofian',
-        role: 'Team leader',
-        description: 'Your team leader',
-        picture: 'https://avatars.dicebear.com/4.5/api/male/sofian.svg'
       },
       {
         name: 'Arthur',
@@ -80,21 +74,9 @@ export default {
         picture: 'https://avatars.dicebear.com/4.5/api/male/arthur.svg'
       },
       {
-        name: 'Maxence',
-        role: 'Metal developper',
-        description: 'Because i love metal',
-        picture: 'https://avatars.dicebear.com/4.5/api/male/maxence.svg'
-      },
-      {
-        name: 'Yannick',
-        role: 'IOS developper',
-        description: 'IOS Addict',
-        picture: 'https://avatars.dicebear.com/4.5/api/male/yannick.svg'
-      },
-      {
         name: 'Maïa',
         role: 'IOT Maker',
-        description: 'Build great thins togethers',
+        description: 'Build great things togethers',
         picture: 'https://avatars.dicebear.com/4.5/api/female/maia.svg'
       }
     ]

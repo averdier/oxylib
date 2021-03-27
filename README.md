@@ -4,7 +4,7 @@
 
 Projet DIY visant à permettre le contrôle du débit d'une bouteille d'oxygène portative à l'aide du Bluetooth low energy.
 
-Projet née lors du [RespirH@ckation 2019](https://www.respirhacktion.com/)
+Projet née lors du [RespirH@ckation 2019](https://www.respirhacktion.com/a_propos_de_respirh@cktion)
 
 
 ## Besoin
@@ -33,11 +33,11 @@ Preuve de concept de l'application Android Wear
 
 ## Périphériques
 
-- [Arduino33BLE]()
-- [Esp32]()
-- [M5Stack]()
+- Arduino33BLE
+- Esp32
+- M5Stack
 
 ## Clients
 
-- [Android Wear]()
-- [PWA]()
+- Android Wear
+- PWA
